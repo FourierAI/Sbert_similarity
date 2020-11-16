@@ -5,7 +5,7 @@ WORKDIR /app
 COPY sentence_transformers /app/sentence_transformers
 COPY /datasets /app/datasets
 COPY train.py /app
-COPY inference.py /app
+COPY eval.py /app
 COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
