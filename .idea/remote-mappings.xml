@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@sftp://zhipengye@10.7.6.67:22/home/zhipengye/.conda/envs/fyp1/bin/python3.6">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$/../short_sentence_similarity" remote-root="/home/zhipengye/workspace/projects/short_sentence_similarity" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>
