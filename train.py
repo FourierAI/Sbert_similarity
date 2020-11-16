@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     model = SentenceTransformer(modules=[word_embedding_model, pooling_model, dense_model])
 
-    train_examples, sentences1, sentences2, scores = load_train_data(dataset, task_type)
+    train_examples, sentences1, sentences2, scores = load_train_data(dataset)
 
     train_dataset = SentencesDataset(train_examples, model)
     train_dataloader = DataLoader(train_dataset, shuffle=True, batch_size=batch_size)
