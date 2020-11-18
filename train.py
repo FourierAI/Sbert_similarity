@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--base_model', type=str, default='bert-base-uncased')
     parser.add_argument('--sentence_embedding_dim', type=int, default=256)
-    parser.add_argument('--model_save_path', type=str, default='./')
+    parser.add_argument('--model_save_path', type=str, default='./model_save')
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--dataset', type=str, default='msrp', choices=['msrp', 'sts', 'atec', 'ccks', 'chsts'])
