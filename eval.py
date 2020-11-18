@@ -1,12 +1,6 @@
 import argparse
-import json
-from itertools import islice
 
-from sklearn import metrics
-from scipy.stats import spearmanr
-from scipy.stats import pearsonr
-
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import SentenceTransformer, util, evaluation
 
 import load_data as ld
 

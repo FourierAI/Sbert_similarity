@@ -1,12 +1,11 @@
 import argparse
-from itertools import islice
 
+from sentence_transformers import SentenceTransformer, SentencesDataset, losses
+from sentence_transformers import evaluation
+from sentence_transformers import models
 from torch import nn
 from torch.utils.data import DataLoader
 
-from sentence_transformers import SentenceTransformer, SentencesDataset, InputExample, losses
-from sentence_transformers import evaluation
-from sentence_transformers import models
 import load_data as ld
 
 if __name__ == "__main__":
