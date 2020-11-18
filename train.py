@@ -7,96 +7,7 @@ from torch.utils.data import DataLoader
 from sentence_transformers import SentenceTransformer, SentencesDataset, InputExample, losses
 from sentence_transformers import evaluation
 from sentence_transformers import models
-
-
-def load_train_data(dataset):
-    if dataset == 'msrp':
-        return load_msrp_train()
-    elif dataset == 'sts':
-        return load_sts_train()
-    else:
-        return load_chbank_train()
-
-
-def load_chbank_train():
-    train_exmples = []
-    bank_file = 'datasets/ccks/train.txt'
-    positive_count = 0
-    negative_count = 0
-    sentences1 = []
-    sentences2 = []
-    scores = []
-    with open(bank_file) as file:
-        for line in islice(file, 0, None):
-            content = line.split('\t')
-            label = int(content[2])
-            sent_1 = content[0]
-            sent_2 = content[1]
-            sentences1.append(sent_1)
-            sentences2.append(sent_2)
-            scores.append(label)
-            examples = InputExample(texts=[sent_1, sent_2], label=label)
-            train_exmples.append(examples)
-            if int(label) == 0:
-                negative_count += 1
-            else:
-                positive_count += 1
-    print(
-        'positive sample:{} and negative sample:{} and its positive ratio is :{}'.format(positive_count, negative_count,
-                                                                                         positive_count / (
-                                                                                                 negative_count + positive_count)))
-    return train_exmples, sentences1, sentences2, scores
-
-
-def load_sts_train():
-    train_exmples = []
-    sts_file = 'datasets/sts/sts-train.csv'
-    sentences1 = []
-    sentences2 = []
-    scores = []
-    with open(sts_file) as file:
-        for line in islice(file, 0, None):
-            content = line.split('\t')
-            label = int(content[4])
-            sent_1 = content[5]
-            sent_2 = content[6]
-            sentences1.append(sent_1)
-            sentences2.append(sent_2)
-            scores.append(label)
-            examples = InputExample(texts=[sent_1, sent_2], label=label)
-            train_exmples.append(examples)
-
-    return train_exmples, sentences1, sentences2, scores
-
-
-def load_msrp_train():
-    train_exmples = []
-    msrp_file = 'datasets/msrp/msr_paraphrase_train.txt'
-    positive_count = 0
-    negative_count = 0
-    sentences1 = []
-    sentences2 = []
-    scores = []
-    with open(msrp_file) as file:
-        for line in islice(file, 1, None):
-            content = line.split('\t')
-            label = int(content[0])
-            sent_1 = content[3]
-            sent_2 = content[4]
-            sentences1.append(sent_1)
-            sentences2.append(sent_2)
-            scores.append(label)
-            examples = InputExample(texts=[sent_1, sent_2], label=label)
-            train_exmples.append(examples)
-            if int(label) == 0:
-                negative_count += 1
-            else:
-                positive_count += 1
-    print(
-        'positive sample:{} and negative sample:{} and its positive ratio is :{}'.format(positive_count, negative_count,
-                                                                                         positive_count / (
-                                                                                                 negative_count + positive_count)))
-    return train_exmples, sentences1, sentences2, scores
+import load_data as ld
 
 
 if __name__ == "__main__":
@@ -133,14 +44,14 @@ if __name__ == "__main__":
 
     model = SentenceTransformer(modules=[word_embedding_model, pooling_model, dense_model])
 
-    train_examples, sentences1, sentences2, scores = load_train_data(dataset)
+    train_examples = ld.load_dataset(dataset_name=dataset, dataset_type='train')
 
     train_dataset = SentencesDataset(train_examples, model)
     train_dataloader = DataLoader(train_dataset, shuffle=True, batch_size=batch_size)
 
     train_loss = losses.ContrastiveLoss(model=model)
 
-    evaluator = evaluation.EmbeddingSimilarityEvaluator(sentences1, sentences2, scores)
+    evaluator = evaluation.EmbeddingSimilarityEvaluator.from_input_examples(train_examples)
 
     # Tune the model
     model.fit(train_objectives=[(train_dataloader, train_loss)], epochs=epochs, warmup_steps=100,
