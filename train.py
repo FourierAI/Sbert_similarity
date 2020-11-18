@@ -9,7 +9,6 @@ from sentence_transformers import evaluation
 from sentence_transformers import models
 import load_data as ld
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
@@ -22,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('--model_save_path', type=str, default='./')
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--epochs', type=int, default=10)
-    parser.add_argument('--dataset', type=str, default='msrp', choices=['msrp', 'sts', 'chinese_bank'])
+    parser.add_argument('--dataset', type=str, default='msrp', choices=['msrp', 'sts', 'atec', 'ccks', 'chsts'])
     parser.add_argument('--task_type', type=str, default='classification', choices=['classification', 'regression'])
     parser.add_argument('--masked', type=bool, default=False, choices=[False, True])
     args = parser.parse_args()
