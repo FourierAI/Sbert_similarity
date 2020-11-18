@@ -32,7 +32,7 @@ def eval_classification(scores, predicted_label, output_file):
 
 
 def load_chbank_test():
-    bank_file = 'datasets/chinese/bank_test.txt'
+    bank_file = 'datasets/ccks/test.txt'
     negative_count=0
     positive_count = 0
     sentences1 = []

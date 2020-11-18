@@ -20,7 +20,7 @@ def load_train_data(dataset):
 
 def load_chbank_train():
     train_exmples = []
-    bank_file = 'datasets/chinese/bank_train.txt'
+    bank_file = 'datasets/ccks/train.txt'
     positive_count = 0
     negative_count = 0
     sentences1 = []
