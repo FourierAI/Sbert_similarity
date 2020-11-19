@@ -42,7 +42,7 @@ def load_dataset(dataset_name, dataset_type):
             content = line.split('\t')
             sent1 = content[0]
             sent2 = content[1]
-            score = content[2].strip()
+            score = float(content[2].strip())
             example = InputExample(texts=[sent1, sent2], label=score)
             examples.append(example)
 

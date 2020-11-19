@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 import load_data as ld
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
 
     # Some available pre_trained models are in huggingface,
@@ -49,7 +50,10 @@ if __name__ == "__main__":
 
     train_loss = losses.ContrastiveLoss(model=model)
 
-    evaluator = evaluation.EmbeddingSimilarityEvaluator.from_input_examples(train_examples)
+    if task_type == "classification":
+        evaluator = evaluation.EmbeddingSimilarityEvaluator.from_input_examples(train_examples)
+    else:
+        evaluator = evaluation.BinaryClassificationEvaluator.from_input_examples(train_examples)
 
     # Tune the model
     model.fit(train_objectives=[(train_dataloader, train_loss)], epochs=epochs, warmup_steps=100,
